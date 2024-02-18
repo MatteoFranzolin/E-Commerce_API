@@ -9,25 +9,29 @@ $routes = [
 ];
 
 // Funzione per aggiungere una route
-function addRoute($method, $path, $callback) {
+function addRoute($method, $path, $callback)
+{
     global $routes;
     $routes[$method][$path] = $callback;
 }
 
 // Funzione per ottenere il metodo della richiesta HTTP
-function getRequestMethod() {
+function getRequestMethod()
+{
     return $_SERVER['REQUEST_METHOD'];
 }
 
 // Funzione per ottenere il percorso richiesto
-function getRequestPath() {
+function getRequestPath()
+{
     $path = $_SERVER['REQUEST_URI'];
     $path = parse_url($path, PHP_URL_PATH);
     return rtrim($path, '/');
 }
 
 // Funzione per gestire la richiesta
-function handleRequest() {
+function handleRequest()
+{
     global $routes;
 
     $method = getRequestMethod();
@@ -52,7 +56,7 @@ function handleRequest() {
 
 //Aggiungi qui le routes
 
-$productspageCallback = function() {
+$productspageCallback = function () {
     echo "Gestisci richiesta GET per tutti i prodotti";
 };
 
@@ -60,7 +64,7 @@ addRoute('GET', '/products', $productspageCallback);
 addRoute('POST', '/products', $productspageCallback);
 
 
-$singleproductpageCallback = function($matches) {
+$singleproductpageCallback = function ($matches) {
     $parts = explode('/', $matches); //divide la stringa in base agli /
     $id = end($parts); //prende l'ultimo elemento dell'array che è l'id
     echo "Gestisci richiesta GET per il prodotto con ID: $id";

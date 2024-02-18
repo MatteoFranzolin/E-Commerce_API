@@ -1,6 +1,9 @@
 <?php
-class ProductController {
-    public function add() {
+
+class ProductController
+{
+    public function add()
+    {
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nome'], $_POST['descrizione'], $_POST['prezzo'])) {
             $product = Product::Create($_POST);
             if ($product) {

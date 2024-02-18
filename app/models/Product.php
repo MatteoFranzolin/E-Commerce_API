@@ -1,6 +1,7 @@
 <?php
 
-require_once __DIR__."/connection/Database.php";
+require_once __DIR__ . "/connection/Database.php";
+
 class Product
 {
     private $id, $nome, $marca, $prezzo;
