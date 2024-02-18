@@ -1,6 +1,6 @@
 <?php
 
-// Definisci un array associativo per mappare le route
+// Array associativo per mappare le route
 $routes = [
     'GET' => [],
     'POST' => [],
@@ -8,20 +8,20 @@ $routes = [
     'DELETE' => []
 ];
 
-// Funzione per aggiungere una route
+// Aggiungi routes
 function addRoute($method, $path, $callback)
 {
     global $routes;
     $routes[$method][$path] = $callback;
 }
 
-// Funzione per ottenere il metodo della richiesta HTTP
+// richiesta HTTP
 function getRequestMethod()
 {
     return $_SERVER['REQUEST_METHOD'];
 }
 
-// Funzione per ottenere il percorso richiesto
+// path
 function getRequestPath()
 {
     $path = $_SERVER['REQUEST_URI'];
@@ -29,7 +29,7 @@ function getRequestPath()
     return rtrim($path, '/');
 }
 
-// Funzione per gestire la richiesta
+// gestione richiesta
 function handleRequest()
 {
     global $routes;
@@ -37,31 +37,37 @@ function handleRequest()
     $method = getRequestMethod();
     $path = getRequestPath();
 
-    // Verifica se esiste una route per il metodo e il percorso richiesti
     if (isset($routes[$method])) {
         foreach ($routes[$method] as $routePath => $callback) {
             // Verifica se il percorso richiesto corrisponde al percorso della route
             if (preg_match('#^' . $routePath . '$#', $path, $matches)) {
-                // Chiamata al callback passando l'ID come parametro
                 call_user_func_array($callback, $matches);
                 return;
             }
         }
     }
 
-    // Ritorna un errore 404 se la route non è stata trovata
+    // 404 se la route non è stata trovata
     http_response_code(404);
     echo "404 Not Found";
 }
 
+//CONTROLLERS
+require_once __DIR__.'/app/controllers/ProductController.php';
+
 //Aggiungi qui le routes
 
-$productspageCallback = function () {
+$productsPageCallback = function () {
+    $controller = new ProductController();
+    $controller->view();
     echo "Gestisci richiesta GET per tutti i prodotti";
 };
-
-addRoute('GET', '/products', $productspageCallback);
-addRoute('POST', '/products', $productspageCallback);
+$addProduct = function(){
+    $controller = new ProductController();
+    $controller->add();
+};
+addRoute('GET', '/products', $productsPageCallback);
+addRoute('POST', '/products', $addProduct);
 
 
 $singleproductpageCallback = function ($matches) {
@@ -69,6 +75,7 @@ $singleproductpageCallback = function ($matches) {
     $id = end($parts); //prende l'ultimo elemento dell'array che è l'id
     echo "Gestisci richiesta GET per il prodotto con ID: $id";
 };
+
 addRoute('GET', '/products/(\d+)', $singleproductpageCallback);
 addRoute('DELETE', '/products/(\d+)', $singleproductpageCallback);
 addRoute('PATCH', '/products/(\d+)', $singleproductpageCallback);
