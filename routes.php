@@ -50,11 +50,24 @@ function handleRequest() {
     echo "404 Not Found";
 }
 
-// Aggiungi le tue route qui
-addRoute('GET', '/customers/(\d+)', function($id) {
-    // $id contiene il valore dell'ID
-    echo "Gestisci richiesta GET per il cliente con ID: $id";
-});
+//Aggiungi qui le routes
 
-// Esegui il gestore della richiesta
+$productspageCallback = function() {
+    echo "Gestisci richiesta GET per tutti i prodotti";
+};
+
+addRoute('GET', '/products', $productspageCallback);
+addRoute('POST', '/products', $productspageCallback);
+
+
+$singleproductpageCallback = function($matches) {
+    $parts = explode('/', $matches); //divide la stringa in base agli /
+    $id = end($parts); //prende l'ultimo elemento dell'array che è l'id
+    echo "Gestisci richiesta GET per il prodotto con ID: $id";
+};
+addRoute('GET', '/products/(\d+)', $singleproductpageCallback);
+addRoute('DELETE', '/products/(\d+)', $singleproductpageCallback);
+addRoute('PATCH', '/products/(\d+)', $singleproductpageCallback);
+
+// Gestore delle richieste
 handleRequest();
