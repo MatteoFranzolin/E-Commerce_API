@@ -1,5 +1,7 @@
 <?php
 
+require_once __DIR__ . "/../models/Product.php";
+
 class ProductController
 {
     public function add()
@@ -22,13 +24,35 @@ class ProductController
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             $products = Product::FetchAll();
             if ($products) {
-                header('Location: products.php?success=1');
+                $data = [];
+                foreach ($products as $product) {
+                    $data[] = [
+                        'type' => get_class($product),
+                        'id' => $product->getId(),
+                        'attributes' => [
+                            'marca' => $product->getMarca(),
+                            'nome' => $product->getNome(),
+                            'prezzo' => $product->getPrezzo()
+                        ]
+                    ];
+                }
+
+                $response = [
+                    'data' => $data
+                ];
+
+                header('Content-Type: application/vnd.api+json');
+                echo json_encode($response);
             } else {
-                header('Location: products.php?error=1');
+                http_response_code(500);
+                echo json_encode(['error' => 'Errore nel recupero dei prodotti']);
             }
         } else {
-            header('Location: products.php');
+            // Metodo di richiesta non supportato
+            http_response_code(405);
+            echo json_encode(['error' => 'Metodo non consentito']);
         }
         exit();
     }
+
 }
