@@ -18,6 +18,7 @@ function addRoute($method, $path, $callback)
 // richiesta HTTP
 function getRequestMethod()
 {
+    $_SERVER['HTTP_ACCEPT'] = 'application/vnd.api+json'; // CONTROLLA LA ACCEPT DELLA RESPONSE
     return $_SERVER['REQUEST_METHOD'];
 }
 

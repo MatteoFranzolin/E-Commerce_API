@@ -40,6 +40,7 @@ class ProductController
                 $response = [
                     'data' => $data
                 ];
+                header('Location: /products');
                 header('Content-Type: application/vnd.api+json');
                 echo json_encode($response);
             } else {
@@ -71,6 +72,7 @@ class ProductController
                 $response = [
                     'data' => $data
                 ];
+                header('Location: /products/'.$id);
                 header('Content-Type: application/vnd.api+json');
                 echo json_encode($response);
             } else {
