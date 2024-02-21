@@ -6,7 +6,7 @@ class ProductController
 {
     public function add()
     {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nome'], $_POST['descrizione'], $_POST['prezzo'])) {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nome'], $_POST['marca'], $_POST['prezzo'])) {
             $product = Product::Create($_POST);
             if ($product) {
                 header('Location: products.php?success=1');
