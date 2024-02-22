@@ -9,9 +9,25 @@ class ProductController
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nome'], $_POST['marca'], $_POST['prezzo'])) {
             $product = Product::Create($_POST);
             if ($product) {
-                header('Location: products.php?success=1');
+                $data = [
+                    'type' => get_class($product),
+                    'id' => $product->getId(),
+                    'attributes' => [
+                        'marca' => $product->getMarca(),
+                        'nome' => $product->getNome(),
+                        'prezzo' => $product->getPrezzo()
+                    ]
+                ];
+
+                $response = [
+                    'data' => $data
+                ];
+                header('Location: /products/' . $product->getId());
+                header('HTTP/1.1 200 OK');
+                header('Content-Type: application/vnd.api+json');
+                echo json_encode($response);
             } else {
-                header('Location: products.php?error=1');
+                http_response_code(404);
             }
         } else {
             header('Location: add_product.php');
@@ -41,7 +57,7 @@ class ProductController
                     'data' => $data
                 ];
                 header('Location: /products');
-                header('HTTP/1.1 200 OK');
+                header('HTTP/1.1 201 CREATED');
                 header('Content-Type: application/vnd.api+json');
                 echo json_encode($response);
             } else {
