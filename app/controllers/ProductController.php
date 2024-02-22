@@ -41,11 +41,11 @@ class ProductController
                     'data' => $data
                 ];
                 header('Location: /products');
+                header('HTTP/1.1 200 OK');
                 header('Content-Type: application/vnd.api+json');
                 echo json_encode($response);
             } else {
-                http_response_code(500);
-                echo json_encode(['error' => 'Errore nel recupero dei prodotti']);
+                http_response_code(404);
             }
         } else {
             http_response_code(405);
@@ -73,11 +73,11 @@ class ProductController
                     'data' => $data
                 ];
                 header('Location: /products/'.$id);
+                header('HTTP/1.1 200 OK');
                 header('Content-Type: application/vnd.api+json');
                 echo json_encode($response);
             } else {
-                http_response_code(500);
-                echo json_encode(['error' => 'Errore nel recupero dei prodotti']);
+                http_response_code(404);
             }
         } else {
             http_response_code(405);
