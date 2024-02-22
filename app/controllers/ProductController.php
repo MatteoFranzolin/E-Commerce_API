@@ -99,4 +99,14 @@ class ProductController
         }
         exit();
     }
+    
+    public function delete()
+    {
+        
+    }
+
+    public function update()
+    {
+
+    }
 }
