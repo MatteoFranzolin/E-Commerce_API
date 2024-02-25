@@ -23,7 +23,7 @@ class ProductController
                     'data' => $data
                 ];
                 header('Location: /products/' . $product->getId());
-                header('HTTP/1.1 200 OK');
+                header('HTTP/1.1 201 CREATED');
                 header('Content-Type: application/vnd.api+json');
                 echo json_encode($response);
             } else {
@@ -57,7 +57,7 @@ class ProductController
                     'data' => $data
                 ];
                 header('Location: /products');
-                header('HTTP/1.1 201 CREATED');
+                header('HTTP/1.1 200 OK');
                 header('Content-Type: application/vnd.api+json');
                 echo json_encode($response);
             } else {
