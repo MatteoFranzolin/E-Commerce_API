@@ -53,10 +53,10 @@ class Product
 
     public static function Create($params)
     {
-        $duplicate = self::CheckDuplicates($params['marca'], $params['nome']);
+        /*$duplicate = self::CheckDuplicates($params['marca'], $params['nome']);
         if ($duplicate) {
             return false;
-        }
+        }*/
         $pdo = self::connectToDatabase();
         $stmt = $pdo->prepare("insert into matteo_franzolin_ecommerce.products (marca, nome, prezzo) values (:marca, :nome, :prezzo)");
         $stmt->bindParam(":marca", $params['marca']);
