@@ -4,13 +4,14 @@ require_once __DIR__ . "/../models/Product.php";
 
 class ProductController
 {
-    public function add()
+    public function add($params)
     {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nome'], $_POST['marca'], $_POST['prezzo'])) {
-            $product = Product::Create($_POST);
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($params['data']['attributes']['marca'], $params['data']['attributes']['nome'], $params['data']['attributes']['prezzo'])) {
+            $params = $params['data']['attributes'];
+            $product = Product::Create($params);
             if ($product) {
                 $data = [
-                    'type' => get_class($product),
+                    'type' => $product->getType(),
                     'id' => $product->getId(),
                     'attributes' => [
                         'marca' => $product->getMarca(),
@@ -30,7 +31,7 @@ class ProductController
                 http_response_code(404);
             }
         } else {
-            header('Location: add_product.php');
+            http_response_code(405);
         }
         exit();
     }
@@ -43,7 +44,7 @@ class ProductController
                 $data = [];
                 foreach ($products as $product) {
                     $data[] = [
-                        'type' => get_class($product),
+                        'type' => $product->getType(),
                         'id' => $product->getId(),
                         'attributes' => [
                             'marca' => $product->getMarca(),
@@ -75,7 +76,7 @@ class ProductController
             $product = Product::FindById($id);
             if ($product) {
                 $data = [
-                    'type' => get_class($product),
+                    'type' => $product->getType(),
                     'id' => $id,
                     'attributes' => [
                         'marca' => $product->getMarca(),
@@ -87,7 +88,7 @@ class ProductController
                 $response = [
                     'data' => $data
                 ];
-                header('Location: /products/'.$id);
+                header('Location: /products/' . $id);
                 header('HTTP/1.1 200 OK');
                 header('Content-Type: application/vnd.api+json');
                 echo json_encode($response);
@@ -99,10 +100,10 @@ class ProductController
         }
         exit();
     }
-    
+
     public function delete()
     {
-        
+
     }
 
     public function update()

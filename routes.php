@@ -63,8 +63,13 @@ $productsPageCallback = function () {
     $controller->view();
 };
 $addProduct = function () {
+    if (isset($_POST['data']))
+        $params = $_POST;
+    else
+        $params = json_decode(file_get_contents("php://input"), true);
+
     $controller = new ProductController();
-    $controller->add();
+    $controller->add($params);
 };
 addRoute('GET', '/products', $productsPageCallback);
 addRoute('POST', '/products', $addProduct);
