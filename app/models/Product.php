@@ -46,6 +46,11 @@ class Product
         $this->prezzo = $prezzo;
     }
 
+    function getType()
+    {
+        return "products";
+    }
+
     public static function Create($params)
     {
         $duplicate = self::CheckDuplicates($params['marca'], $params['nome']);
