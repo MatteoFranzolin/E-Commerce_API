@@ -101,12 +101,18 @@ class ProductController
         exit();
     }
 
-    public function delete()
+    public function deleteProduct($id)
     {
-
+        $product = Product::FindById($id);
+        if ($_SERVER['REQUEST_METHOD'] === 'DELETE' && $product) {
+            $product->delete();
+            http_response_code(204);
+        } else {
+            http_response_code(404);
+        }
     }
 
-    public function update()
+    public function updateProduct($params)
     {
 
     }

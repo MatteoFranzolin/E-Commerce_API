@@ -74,7 +74,6 @@ $addProduct = function () {
 addRoute('GET', '/products', $productsPageCallback);
 addRoute('POST', '/products', $addProduct);
 
-
 $viewSingleProduct = function ($matches) {
     $parts = explode('/', $matches);
     $id = end($parts);
@@ -82,15 +81,21 @@ $viewSingleProduct = function ($matches) {
     $controller->viewProduct($id);
 };
 
-$singleproductpageCallback = function ($matches) {
+$deleteSingleProduct = function ($matches) {
     $parts = explode('/', $matches);
     $id = end($parts);
-    echo "Gestisci richiesta GET per il prodotto con ID: $id";
+    $controller = new ProductController();
+    $controller->deleteProduct($id);
+};
+
+$updateSingleProduct = function ($matches) {
+    $parts = explode('/', $matches);
+    $id = end($parts);
 };
 
 addRoute('GET', '/products/(\d+)', $viewSingleProduct);
-addRoute('DELETE', '/products/(\d+)', $singleproductpageCallback);
-addRoute('PATCH', '/products/(\d+)', $singleproductpageCallback);
+addRoute('DELETE', '/products/(\d+)', $deleteSingleProduct);
+addRoute('PATCH', '/products/(\d+)', $updateSingleProduct);
 
 // Gestore delle richieste
 handleRequest();
