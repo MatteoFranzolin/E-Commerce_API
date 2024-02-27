@@ -122,23 +122,23 @@ class ProductController
         if ($_SERVER['REQUEST_METHOD'] === 'PATCH' && (isset($params['data']['attributes']['marca']) || isset($params['data']['attributes']['nome']) || isset($params['data']['attributes']['prezzo']))) {
             $params = $params['data']['attributes'];
             $product = $product->edit($params);
-                $data = [
-                    'type' => $product->getType(),
-                    'id' => $product->getId(),
-                    'attributes' => [
-                        'marca' => $product->getMarca(),
-                        'nome' => $product->getNome(),
-                        'prezzo' => $product->getPrezzo()
-                    ]
-                ];
+            $data = [
+                'type' => $product->getType(),
+                'id' => $product->getId(),
+                'attributes' => [
+                    'marca' => $product->getMarca(),
+                    'nome' => $product->getNome(),
+                    'prezzo' => $product->getPrezzo()
+                ]
+            ];
 
-                $response = [
-                    'data' => $data
-                ];
-                header('Location: /products/' . $product->getId());
-                header('HTTP/1.1 200 OK');
-                header('Content-Type: application/vnd.api+json');
-                echo json_encode($response);
+            $response = [
+                'data' => $data
+            ];
+            header('Location: /products/' . $product->getId());
+            header('HTTP/1.1 200 OK');
+            header('Content-Type: application/vnd.api+json');
+            echo json_encode($response);
         } else {
             http_response_code(405);
         }
