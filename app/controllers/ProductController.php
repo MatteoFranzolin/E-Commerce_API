@@ -77,7 +77,7 @@ class ProductController
             if ($product) {
                 $data = [
                     'type' => $product->getType(),
-                    'id' => $id,
+                    'id' => $product->getId(),
                     'attributes' => [
                         'marca' => $product->getMarca(),
                         'nome' => $product->getNome(),
