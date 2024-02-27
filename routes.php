@@ -91,6 +91,9 @@ $deleteSingleProduct = function ($matches) {
 $updateSingleProduct = function ($matches) {
     $parts = explode('/', $matches);
     $id = end($parts);
+    $params = json_decode(file_get_contents("php://input"), true);
+    $controller = new ProductController();
+    $controller->updateProduct($id, $params);
 };
 
 addRoute('GET', '/products/(\d+)', $viewSingleProduct);

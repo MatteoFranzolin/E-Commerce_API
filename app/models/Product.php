@@ -122,16 +122,17 @@ class Product
 
     public function edit($params)
     {
+        $id = $this->getId();
         $pdo = self::connectToDatabase();
         $stmt = $pdo->prepare("update matteo_franzolin_ecommerce.products set marca=:marca,nome=:nome,prezzo=:prezzo where id=:id");
         $stmt->bindParam(":marca", $params['marca']);
         $stmt->bindParam(":nome", $params['nome']);
         $stmt->bindParam(":prezzo", $params['prezzo']);
-        $stmt->bindParam(":id", $params['product_id']);
+        $stmt->bindParam(":id", $id);
         if (!$stmt->execute()) {
             return false;
         }
-        return Product::FindById($params['product_id']);
+        return Product::FindById($id);
     }
 
     public function delete()
