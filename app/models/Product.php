@@ -147,8 +147,8 @@ class Product
     private static function connectToDatabase()
     {
 
-        //$database = new Database("192.168.2.200", "matteo_franzolin", "transliterates.paganism.OfficeMax."); // A SCUOLA
-        $database = new Database("127.0.0.1", "root", "root");
+        $database = new Database("192.168.2.200", "matteo_franzolin", "transliterates.paganism.OfficeMax."); // A SCUOLA
+        //$database = new Database("127.0.0.1", "root", "root");
         return $database->connect("matteo_franzolin_ecommerce");
     }
 }
