@@ -16,7 +16,7 @@ class Product
         $this->id = $id;
     }
 
-    function getMarca()
+    public function getMarca()
     {
         return $this->marca;
     }
@@ -26,7 +26,7 @@ class Product
         $this->marca = $marca;
     }
 
-    function getNome()
+    public function getNome()
     {
         return $this->nome;
     }
@@ -36,7 +36,7 @@ class Product
         $this->nome = $nome;
     }
 
-    function getPrezzo()
+    public function getPrezzo()
     {
         return $this->prezzo;
     }
@@ -46,9 +46,17 @@ class Product
         $this->prezzo = $prezzo;
     }
 
-    function getType()
+    public function getType()
     {
         return "products";
+    }
+
+    public function __construct($id, $nome, $marca, $prezzo)
+    {
+        $this->id = $id;
+        $this->nome = $nome;
+        $this->marca = $marca;
+        $this->prezzo = $prezzo;
     }
 
     public static function Create($params)
