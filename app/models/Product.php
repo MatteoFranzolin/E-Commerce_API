@@ -51,14 +51,6 @@ class Product
         return "products";
     }
 
-    public function __construct($id, $nome, $marca, $prezzo)
-    {
-        $this->id = $id;
-        $this->nome = $nome;
-        $this->marca = $marca;
-        $this->prezzo = $prezzo;
-    }
-
     public static function Create($params)
     {
         /*$duplicate = self::CheckDuplicates($params['marca'], $params['nome']);
@@ -96,18 +88,6 @@ class Product
             return false;
         }
         return $stmt->fetchObject("Product");
-    }
-
-    public static function Find($nome, $marca)
-    {
-        $pdo = self::connectToDatabase();
-        $stmt = $pdo->prepare("select * from matteo_franzolin_ecommerce.products where nome = :nome and marca = :marca");
-        $stmt->bindParam(":nome", $nome);
-        $stmt->bindParam(":marca", $marca);
-        if (!$stmt->execute()) {
-            return false;
-        }
-        return $stmt->fetchObject('Product');
     }
 
     public static function FindById($id)
@@ -155,8 +135,8 @@ class Product
     private static function connectToDatabase()
     {
 
-        $database = new Database("192.168.2.200", "matteo_franzolin", "transliterates.paganism.OfficeMax."); // A SCUOLA
-        //$database = new Database("127.0.0.1", "root", "root");
+        //$database = new Database("192.168.2.200", "matteo_franzolin", "transliterates.paganism.OfficeMax."); // A SCUOLA
+        $database = new Database("127.0.0.1", "root", "root");
         return $database->connect("matteo_franzolin_ecommerce");
     }
 }
